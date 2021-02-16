@@ -1,18 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Search v-on:new-search="searchMovies" />
+    <Movies :movies="movies"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Movies from './components/Movies.vue';
+import Search from './components/Search.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Movies,
+    Search
+  }, 
+  data() {
+      return {
+        movies: null,
+        search: 'Splash'
+      };
+    },
+  methods: {
+    searchMovies(newSearch) {
+      this.search = newSearch
+      const url = `http://www.omdbapi.com/?t=${newSearch}&plot=full&apikey=2550f986`
+      axios
+        .get(url)
+        .then(res => {
+          this.movies = res.data;
+        })
+    },
+    fetchMovie(search) {
+      const url = `http://www.omdbapi.com/?t=${search}&plot=full&apikey=2550f986`
+      axios
+        .get(url)
+        .then(res => {
+          this.movies = res.data;
+          console.log('checking api call', res.data)
+        })
+    },
+  },
+  mounted() {
+    this.fetchMovie(this.search)
+   }
 }
 </script>
 
