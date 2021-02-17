@@ -19,26 +19,25 @@ export default {
   data() {
       return {
         movies: null,
-        search: 'Splash'
+        search: 'Big'
       };
     },
   methods: {
     searchMovies(newSearch) {
       this.search = newSearch
-      const url = `http://www.omdbapi.com/?t=${newSearch}&plot=full&apikey=2550f986`
+      const url = `http://www.omdbapi.com/?s=${newSearch}&type=movie&plot=full&page=10&apikey=2550f986`
       axios
         .get(url)
         .then(res => {
-          this.movies = res.data;
+          this.movies = res.data.Search;
         })
     },
     fetchMovie(search) {
-      const url = `http://www.omdbapi.com/?t=${search}&plot=full&apikey=2550f986`
+      const url = `http://www.omdbapi.com/?s=${search}&type=movie&plot=full&page=10&apikey=2550f986`
       axios
         .get(url)
         .then(res => {
-          this.movies = res.data;
-          console.log('checking api call', res.data)
+          this.movies = res.data.Search;
         })
     },
   },

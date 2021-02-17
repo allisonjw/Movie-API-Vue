@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <section class="section">
-        <h2>{{movies.Title}}</h2>
-          <h2>Rating: <span>{{movies.Rated}}</span></h2>
-          <h2>Year: <span>{{movies.Year}}</span></h2>
-          <h2>Actors: <span>{{movies.Actors}}</span></h2>
-          <h2 class="plot">{{movies.Plot}}</h2>
-          <img :src="movies.Poster" >
+  <div class="movie_holder">
+    <section class="section" v-for="movie in movies" :key="movie.imdbID">
+        <h2>{{movie.Title}}</h2>
+        <h2>Year: <span>{{movie.Year}}</span></h2>
+        <h2>IMDB ID: <span>{{movie.imdbID}}</span></h2>
+        <img :src="movie.Poster" >
     </section> 
   </div> 
 </template>
@@ -14,11 +12,16 @@
 
   export default {
     name: 'Movies',
-    props : ['movies']
+    props: ['movies'],
   }
 </script>
 
 <style>
+  .movie_holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .section {
     align-items: center;
     background-color: #000000c2;;
@@ -26,12 +29,13 @@
     flex-direction: column;
     margin: 2% 12%;
     border-radius: 1%;
+    width: 45%;
   }
   h2 {
       color: white;
   }
   img {
-      width: 30%;
+      width: 50%;
       margin: 2%;
   }
   .plot {
